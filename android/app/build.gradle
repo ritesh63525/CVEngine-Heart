@@ -1,0 +1,129 @@
+apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+apply plugin: "com.google.gms.google-services"
+
+/**
+ * React Native Android configuration
+ */
+react {
+    /*
+     * Automatically links installed
+     * React Native native modules.
+     */
+    autolinkLibrariesWithApp()
+}
+
+/**
+ * Enable Proguard for release builds.
+ * Keep false while developing/testing.
+ */
+def enableProguardInReleaseBuilds = false
+
+/**
+ * JavaScriptCore configuration.
+ * Hermes will be used when hermesEnabled=true.
+ */
+def jscFlavor =
+    'io.github.react-native-community:jsc-android:2026004.+'
+
+android {
+
+    ndkVersion rootProject.ext.ndkVersion
+
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileSdk rootProject.ext.compileSdkVersion
+
+    // ==========================================
+    // APP PACKAGE
+    // ==========================================
+
+    namespace "com.cvengineapp"
+
+    defaultConfig {
+
+        applicationId "com.cvengineapp"
+
+        minSdkVersion rootProject.ext.minSdkVersion
+
+        targetSdkVersion rootProject.ext.targetSdkVersion
+
+        versionCode 1
+
+        versionName "1.0"
+    }
+
+    // ==========================================
+    // SIGNING
+    // ==========================================
+
+    signingConfigs {
+
+        debug {
+
+            storeFile file('debug.keystore')
+
+            storePassword 'android'
+
+            keyAlias 'androiddebugkey'
+
+            keyPassword 'android'
+        }
+    }
+
+    // ==========================================
+    // BUILD TYPES
+    // ==========================================
+
+    buildTypes {
+
+        debug {
+
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+
+            /*
+             * Development configuration.
+             *
+             * Before publishing the final app
+             * to Play Store we will create a
+             * separate production signing key.
+             */
+            signingConfig signingConfigs.debug
+
+            minifyEnabled enableProguardInReleaseBuilds
+
+            proguardFiles(
+                getDefaultProguardFile(
+                    "proguard-android-optimize.txt"
+                ),
+                "proguard-rules.pro"
+            )
+        }
+    }
+}
+
+// ==========================================
+// DEPENDENCIES
+// ==========================================
+
+dependencies {
+
+    implementation(
+        "com.facebook.react:react-android"
+    )
+
+    if (hermesEnabled.toBoolean()) {
+
+        implementation(
+            "com.facebook.react:hermes-android"
+        )
+
+    } else {
+
+        implementation jscFlavor
+    }
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "578981140151",
+    "project_id": "heart001cv",
+    "storage_bucket": "heart001cv.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578981140151:android:45d3b36007dc3cddc81f32",
+        "android_client_info": {
+          "package_name": "com.cvengineapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo8n1OJeH_8Ssvn5hcT399P7HKD7XUFYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

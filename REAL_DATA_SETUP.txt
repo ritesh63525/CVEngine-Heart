@@ -1,0 +1,46 @@
+CVENGINE HEART MONITOR - REAL DATA SETUP
+========================================
+
+DATA FLOW
+MAX30102 -> ESP32 -> OLED + BLE -> Heart Monitor app -> local SQLite -> History
+
+BLE CONTRACT
+Device name: CVengine Watch
+Service UUID: 12345678-1234-1234-1234-1234567890ab
+Characteristic UUID: abcdefab-1234-5678-1234-abcdefabcdef
+Notify packets:
+  82,97,OK
+  0,0,NO_CONTACT
+  0,0,ERROR
+
+IMPORTANT HARDWARE CHECK
+The supplied Arduino sketch currently declares ESP32-S3 SUPER MINI with SDA=6, SCL=7 and OLED 128x32.
+Before uploading, confirm these match the physical board and OLED actually being used.
+If the real board is the earlier Beetle ESP32-C3 wiring (SDA=8, SCL=9) or OLED is 128x64, change only those hardware constants to match the real wiring/display.
+Do NOT change a working BPM algorithm just to change BLE.
+
+APP DATA STORAGE
+- Profile is local to the phone.
+- Valid sensor readings are shown live continuously.
+- When Start Monitoring is active, a valid reading is saved to SQLite every 2 seconds.
+- NO_CONTACT / ERROR packets are not saved as health readings.
+- History reads from the local cvengine.db database.
+- Another phone gets its own independent local SQLite database.
+
+FIRST REAL TEST
+1. Upload CVengine_ESP32_BLE_Final.ino to ESP32.
+2. Confirm OLED shows the expected sensor result.
+3. On Android, enable Bluetooth and install/open Heart Monitor.
+4. Enter age/gender once.
+5. Tap Connect ESP32 -> choose CVengine Watch.
+6. Tap Start Monitoring.
+7. Put finger on sensor.
+8. Compare OLED BPM/SpO2 with app BPM/SpO2.
+9. Open History and verify saved readings.
+
+BUILD FROM PROJECT ROOT
+npm.cmd install
+adb devices
+npm.cmd start
+# In a second terminal:
+npx.cmd react-native run-android

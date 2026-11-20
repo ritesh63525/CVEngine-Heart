@@ -1,0 +1,43 @@
+CVengineApp Professional Build
+==============================
+
+Included in this build:
+- Real BLE scanning / connection / notification-characteristic monitoring
+- Real BPM + SpO2 only (no dummy readings)
+- Local SQLite: one phone = one local user
+- Monitoring sessions with start/stop summary
+- Professional home dashboard and splash screen
+- Bottom navigation: Home / History / Profile / Settings
+- Colored connection / sensor status banners
+- Animated heart while live readings are received
+- RSSI-based Bluetooth signal quality
+- Last-reading timestamp
+- Auto reconnect (3 attempts, configurable)
+- History filters: Today / 7 Days / All
+- History statistics + lightweight heart-rate trend chart
+- CSV share/export
+- Profile editing
+- Settings: notifications, sound, vibration, auto reconnect
+- Separate notifications + custom sound effects for connect, reading start,
+  contact lost, reading error, disconnect, no data and reconnect
+
+ESP32 BLE payload expected by the app:
+  Normal        82,97,OK
+  Contact lost  0,0,NO_CONTACT
+  Sensor error  0,0,ERROR
+
+IMPORTANT:
+The app cannot read pixels from the OLED. The ESP32 must send the same calculated
+BPM / SpO2 values over a BLE NOTIFY characteristic that it displays on the OLED.
+
+Install / run:
+1. Open this CVengineApp folder in VS Code.
+2. Terminal:
+   npm.cmd install
+3. Connect Android phone with USB debugging enabled.
+4. Check:
+   adb devices
+5. Run:
+   npx.cmd react-native run-android
+
+Standalone release APK can be prepared after normal device testing succeeds.
